@@ -1,0 +1,6 @@
+framework module Pods_SeeWorld {
+  umbrella header "Pods-SeeWorld-umbrella.h"
+
+  export *
+  module * { export * }
+}

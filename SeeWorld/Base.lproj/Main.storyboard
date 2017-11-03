@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_9" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -9,16 +14,65 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="SeeWorld" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ty8-FU-NkU">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="453"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="ty8-FU-NkU" secondAttribute="height" multiplier="125:151" id="gWW-rK-zmE"/>
+                                </constraints>
+                            </mapView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="7TL-8q-ZQ1">
+                                <rect key="frame" x="0.0" y="528" width="375" height="490"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1LK-ol-82l">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="490"/>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="AIA-R3-cz0">
+                                <rect key="frame" x="0.0" y="452" width="375" height="360"/>
+                                <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" red="0.92077520540000002" green="0.97960159459999996" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oit-oK-p1B">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="microphoneTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lH6-y7-Pb5"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="leading" secondItem="ty8-FU-NkU" secondAttribute="leading" id="Bnp-Ri-2kM"/>
+                            <constraint firstAttribute="bottom" secondItem="AIA-R3-cz0" secondAttribute="bottom" id="C81-kU-Jbh"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="trailing" secondItem="7TL-8q-ZQ1" secondAttribute="trailing" id="D0f-mH-0st"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="408" id="DrC-Dw-T2t"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="leading" secondItem="7TL-8q-ZQ1" secondAttribute="leading" id="OJh-dV-tOm"/>
+                            <constraint firstItem="7TL-8q-ZQ1" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="528" id="Ty1-Ky-IVs"/>
+                            <constraint firstAttribute="bottom" secondItem="7TL-8q-ZQ1" secondAttribute="bottom" constant="-206" id="fSO-ku-Fw8"/>
+                            <constraint firstItem="ty8-FU-NkU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="pyw-jn-PL9"/>
+                            <constraint firstItem="ty8-FU-NkU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="rJn-2Q-cRx"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="trailing" secondItem="ty8-FU-NkU" secondAttribute="trailing" id="wyM-OG-Ivf"/>
+                            <constraint firstItem="ty8-FU-NkU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="zXm-94-geW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="ty8-FU-NkU" id="TfU-4o-nMj"/>
+                        <outlet property="microphoneButton" destination="Oit-oK-p1B" id="6Ae-N9-ORx"/>
+                        <outlet property="textView" destination="AIA-R3-cz0" id="S73-TP-GnA"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="130.78817733990149"/>
         </scene>
     </scenes>
 </document>

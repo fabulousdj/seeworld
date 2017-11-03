@@ -24,6 +24,19 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Can I get your location?</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Can I get your location?</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Can I access your microphone?</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Speech recognition will be used to determine which words you speak</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
