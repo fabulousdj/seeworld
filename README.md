@@ -1,2 +1,2 @@
-# seeWorld
-The Ohio State University CSE 5914 Capstone Project
+# SeeWorld
+CSE 5914 Capstone Project at The Ohio State University
