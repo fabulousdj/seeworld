@@ -79,7 +79,7 @@ class CallFuncModel {
     
     // Make a Call
     func makeAPhoneCall(number: String)  {
-        let url: NSURL = URL(string: "tel://\(number)")! as NSURL
+        let url: NSURL = URL(string: "tel://1\(number)")! as NSURL
         UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
     }
     
