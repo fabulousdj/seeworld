@@ -101,12 +101,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     }
     
     // The main func, which control the microphone
+    
     @IBAction func microphoneTapped(_ sender: AnyObject) {
         if self.basicModel.audioEngine.isRunning {
             self.basicModel.audioEngine.stop()
             self.basicModel.recognitionRequest?.endAudio()
             microphoneButton.isEnabled = false
-            microphoneButton.setTitle("Start", for: .normal)
             self.basicModel.input = self.basicModel.bestString
             
             if (self.textModel.bool) {
@@ -120,6 +120,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             if (self.textModel.bool) {
                 self.textView.text = "What is your destination?"
                 self.basicModel.testToSpeech("What is your destination?")
+                //self.mapModel.searchDetails(textView)
             }
             else {
                 self.textView.text = "Which transport do you prefer?"
@@ -130,7 +131,6 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(2*NSEC_PER_SEC))/Double(NSEC_PER_SEC)) {
                 self.basicModel.startRecording(_textView: self.textView, _microphoneButton: self.microphoneButton)
             }
-            microphoneButton.setTitle("Stop", for: .normal)
         }
     }
     

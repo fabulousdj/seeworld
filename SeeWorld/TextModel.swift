@@ -15,7 +15,7 @@ import UIKit
 class TextModel {
     let basicModel = BaiscFuncModel()
     let mapModel = MapModel()
-
+    
     var bool: Bool = true
     var state = "sw_waiting_for_destination"
     
@@ -91,15 +91,13 @@ class TextModel {
             break
             
         case "temperature":
-            _textView.text = "It's Sunny outside, the temperature is 22 degree centigrade"
-            
-            //weather.getWeather(city: Columbus)
-            self.basicModel.testToSpeech("It's Sunny outside, the temperature is 22 degree centigrade")
+            self.mapModel.currentWeather(_textView)
             break
             
         case "location":
             // Get the ETA
             self.mapModel.searchPlace(_textView, _mapView)
+
 //            // Get Review
 //            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(3*NSEC_PER_SEC))/Double(NSEC_PER_SEC)) {
 //            }
@@ -127,7 +125,8 @@ class TextModel {
             _textView.text = "You choose bus, We will redirect to the Apple app"
             self.basicModel.testToSpeech("You choose bus, We will leave the app")
             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(3*NSEC_PER_SEC))/Double(NSEC_PER_SEC)) {
-                
+                let myLocation = CLLocationCoordinate2D(latitude: self.mapModel._latEnd, longitude: self.mapModel._lonEnd)
+                self.mapModel.openInMapsTransit(coord: myLocation)
             }
             break
             

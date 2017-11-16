@@ -15,7 +15,9 @@ class MapModel {
 
     // Baisc Model
     let basicModel = BaiscFuncModel()
-
+    let weatherModel = WeatherModel()
+    let callFuncModel = CallFuncModel()
+    
     // Your location
     var _lon: Double = 0.0
     var _lat: Double = 0.0
@@ -157,8 +159,25 @@ class MapModel {
     func openInMapsTransit(coord:CLLocationCoordinate2D) {
         let placemark = MKPlacemark(coordinate:coord, addressDictionary: nil)
         let mapItem = MKMapItem(placemark: placemark)
+        mapItem.name = "Your Destination"
         let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeTransit]
         mapItem.openInMaps(launchOptions: launchOptions)
     }
     
+    // Weather of current location
+    func currentWeather(_ textView: UITextView){
+        let currentLat = String(self._lat)
+        let currentLon = String(self._lon)
+        weatherModel.getWeather(textView, currentLat, currentLon)
+    }
+    
+    // Details for the search location
+    func searchDetails(_ textView: UITextView){
+        let searchLat = String(self._latEnd)
+        let searchLon = String(self._lonEnd)
+//        let searchLat = String("40.0023")
+//        let searchLon = String("-83.0159")
+        callFuncModel.getPlaceID(textView, searchLat, searchLon)
+    }
+
 }

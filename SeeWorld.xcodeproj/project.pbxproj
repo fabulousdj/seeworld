@@ -20,6 +20,9 @@
 		645F840A1FABA73F00BD65AC /* BasicFuncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645F84091FABA73F00BD65AC /* BasicFuncModel.swift */; };
 		645F840C1FABB21A00BD65AC /* TextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645F840B1FABB21A00BD65AC /* TextModel.swift */; };
 		645F840E1FABB3E200BD65AC /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 645F840D1FABB3E200BD65AC /* Podfile */; };
+		648CCE9C1FBBA94700A53E74 /* AddressModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648CCE9B1FBBA94700A53E74 /* AddressModel.swift */; };
+		64E5782D1FBCA13300F6BE48 /* WeatherModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E5782C1FBCA13300F6BE48 /* WeatherModel.swift */; };
+		64E5782F1FBCA7F300F6BE48 /* CallFuncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E5782E1FBCA7F300F6BE48 /* CallFuncModel.swift */; };
 		996A1DC4A5851EE9548C3AD7 /* Pods_SeeWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC416127008FD5CC2429C32 /* Pods_SeeWorld.framework */; };
 /* End PBXBuildFile section */
 
@@ -41,7 +44,10 @@
 		645F84071FABA17800BD65AC /* MapModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapModel.swift; sourceTree = "<group>"; };
 		645F84091FABA73F00BD65AC /* BasicFuncModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicFuncModel.swift; sourceTree = "<group>"; };
 		645F840B1FABB21A00BD65AC /* TextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModel.swift; sourceTree = "<group>"; };
-		645F840D1FABB3E200BD65AC /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		645F840D1FABB3E200BD65AC /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		648CCE9B1FBBA94700A53E74 /* AddressModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressModel.swift; sourceTree = "<group>"; };
+		64E5782C1FBCA13300F6BE48 /* WeatherModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherModel.swift; sourceTree = "<group>"; };
+		64E5782E1FBCA7F300F6BE48 /* CallFuncModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallFuncModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,9 @@
 				645F84071FABA17800BD65AC /* MapModel.swift */,
 				645F84091FABA73F00BD65AC /* BasicFuncModel.swift */,
 				645F840B1FABB21A00BD65AC /* TextModel.swift */,
+				648CCE9B1FBBA94700A53E74 /* AddressModel.swift */,
+				64E5782C1FBCA13300F6BE48 /* WeatherModel.swift */,
+				64E5782E1FBCA7F300F6BE48 /* CallFuncModel.swift */,
 			);
 			path = SeeWorld;
 			sourceTree = "<group>";
@@ -193,9 +202,13 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SeeWorld/Pods-SeeWorld-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -248,9 +261,12 @@
 				645F840C1FABB21A00BD65AC /* TextModel.swift in Sources */,
 				645F840A1FABA73F00BD65AC /* BasicFuncModel.swift in Sources */,
 				645F84081FABA17800BD65AC /* MapModel.swift in Sources */,
+				648CCE9C1FBBA94700A53E74 /* AddressModel.swift in Sources */,
 				645F83EE1FAB94DE00BD65AC /* ViewController.swift in Sources */,
 				645F83EC1FAB94DE00BD65AC /* AppDelegate.swift in Sources */,
+				64E5782D1FBCA13300F6BE48 /* WeatherModel.swift in Sources */,
 				645F83F41FAB94DE00BD65AC /* SeeWorld.xcdatamodeld in Sources */,
+				64E5782F1FBCA7F300F6BE48 /* CallFuncModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
