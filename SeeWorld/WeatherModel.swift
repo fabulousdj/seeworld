@@ -11,7 +11,7 @@ import CoreLocation
 import UIKit
 
 class WeatherModel {
-   
+    
     private let openWeatherMapBaseURL = "http://api.openweathermap.org/data/2.5/weather"
     private let openWeatherMapAPIKey = "8d07dc0456656e99d50a7f6c050df180"
     
@@ -45,6 +45,8 @@ class WeatherModel {
                     result += " outside, the temperature is "
                     result += String(format: "%.0f", (temp - 273.15) * 1.8 + 32)
                     result += " degrees fahrenheit"
+                    
+                    //ContextModel.setWeatherInfo(weatherInfo: result)
                     
                     DispatchQueue.main.async {
                         textView.text = result

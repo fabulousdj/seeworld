@@ -17,6 +17,7 @@ class MapModel {
     let basicModel = BaiscFuncModel()
     let weatherModel = WeatherModel()
     let callFuncModel = CallFuncModel()
+    let addressModel = AddressModel()
     
     // Your location
     var _lon: Double = 0.0
@@ -45,11 +46,12 @@ class MapModel {
     }
     
     // Search place
-    func searchPlace(_ textView: UITextView, _ mapView: MKMapView) {
+    func searchPlace(_ textView: UITextView, _ mapView: MKMapView, fullAddr: String) {
+        
         //Create the search request
         let searchRequest = MKLocalSearchRequest()
         searchRequest.region = mapView.region
-        searchRequest.naturalLanguageQuery = textView.text
+        searchRequest.naturalLanguageQuery = fullAddr
         let activeSearch = MKLocalSearch(request: searchRequest)
         
         activeSearch.start { (response, error) in
@@ -171,12 +173,12 @@ class MapModel {
         weatherModel.getWeather(textView, currentLat, currentLon)
     }
     
-    // Details for the search location
-    func searchDetails(_ textView: UITextView){
-        let searchLat = String(self._latEnd)
-        let searchLon = String(self._lonEnd)
-//        let searchLat = String("40.0023")
-//        let searchLon = String("-83.0159")
+    // Call for the search location
+    func makeCall(_ textView: UITextView){
+        let searchLat = self.addressModel.getCoreData(name: "lat")
+        let searchLon = self.addressModel.getCoreData(name: "lon")
+        //        let searchLat = String("40.0023")
+        //        let searchLon = String("-83.0159")
         callFuncModel.getPlaceID(textView, searchLat, searchLon)
     }
 

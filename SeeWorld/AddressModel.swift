@@ -1,5 +1,6 @@
 //
 //  AddressModel.swift
+//  Save Address to the core data
 //  SeeWorld
 //
 //  Created by Raphael on 11/14/17.
@@ -33,7 +34,10 @@ class AddressModel {
         let ceo: CLGeocoder = CLGeocoder()
         center.latitude = lat
         center.longitude = lon
-    
+        
+        self.newPlace.setValue(String(lat), forKey: "lat")
+        self.newPlace.setValue(String(lon), forKey: "lon")
+        
         let loc: CLLocation = CLLocation(latitude:center.latitude, longitude: center.longitude)
         ceo.reverseGeocodeLocation(loc, completionHandler:
             {(placemarks, error) in
@@ -62,12 +66,12 @@ class AddressModel {
                         self.state = pm.administrativeArea!
                         self.newPlace.setValue(self.state, forKey: "state")
                     }
-//                    if pm.country != nil {
-//                        self.country = pm.country!
-//                    }
-//                    if pm.postalCode != nil {
-//                        self.zipCode = pm.postalCode!
-//                    }
+                    //                    if pm.country != nil {
+                    //                        self.country = pm.country!
+                    //                    }
+                    //                    if pm.postalCode != nil {
+                    //                        self.zipCode = pm.postalCode!
+                    //                    }
                 }
                 
                 // Save the value
@@ -81,18 +85,20 @@ class AddressModel {
     }
     
     // Get value from CoreData
-    func getCoreData() {
+    func getCoreData(name: String) -> String {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PlaceInformation")
         request.returnsObjectsAsFaults = false
-        
+        var returnValue = ""
         do {
             let result = try context.fetch(request)
             for data in result as! [NSManagedObject] {
-                print(data.value(forKey: "name") as! String)
+                print(data.value(forKey: name) as! String)
+                returnValue = data.value(forKey: name) as! String
             }
         } catch {
             print("Failed")
         }
+        return returnValue
     }
     
     // Delete value from CoreData
@@ -100,7 +106,6 @@ class AddressModel {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PlaceInformation")
         let result = try? self.context.fetch(request)
         let resultData = result as! [PlaceInformation]
-        
         for object in resultData {
             self.context.delete(object)
         }
@@ -114,6 +119,16 @@ class AddressModel {
         }
     }
     
+    func someDataExists() -> Bool {
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "PlaceInformation")
+        let result = try? self.context.fetch(request)
+        let resultData = result as! [PlaceInformation]
+        var entitiesCount = 0
+        
+        entitiesCount = resultData.count
+        
+        return entitiesCount > 0
+    }
     
 }
 
