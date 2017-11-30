@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="13533" systemVersion="17C79a" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="PlaceInformation" representedClassName="PlaceInformation" syncable="YES" codeGenerationType="class">
+    <entity name="PlaceInfoStorage" representedClassName="PlaceInfoStorage" syncable="YES" codeGenerationType="class">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lat" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="lon" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lat" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lng" optional="YES" attributeType="Float" defaultValueString="0.0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="placeId" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="PlaceInformation" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="PlaceInfoStorage" positionX="-54" positionY="-9" width="128" height="120"/>
     </elements>
 </model>

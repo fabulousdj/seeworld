@@ -11,16 +11,15 @@ import CoreLocation
 import MapKit
 import UIKit
 
-class MapModel {
+class MapClient {
 
     // Baisc Model
-    let basicModel = BaiscFuncModel()
-    let weatherModel = WeatherModel()
+    let basicModel = TextSpeechConversionClient()
+    let weatherModel = WeatherClient()
     let callFuncModel = CallFuncModel()
-    let addressModel = AddressModel()
     
     // Your location
-    var _lon: Double = 0.0
+    var _lng: Double = 0.0
     var _lat: Double = 0.0
     
     // The search location
@@ -97,7 +96,7 @@ class MapModel {
         currentLocation = locManager.location
     
         _lat = currentLocation.coordinate.latitude
-        _lon = currentLocation.coordinate.longitude
+        _lng = currentLocation.coordinate.longitude
 
         var byUber: String = ""
         var byPublic: String = ""
@@ -105,7 +104,7 @@ class MapModel {
         
         // Uber
         let request = MKDirectionsRequest()
-        request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _lat, longitude: _lon), addressDictionary: nil))
+        request.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _lat, longitude: _lng), addressDictionary: nil))
         request.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _latEnd, longitude: _lonEnd), addressDictionary: nil))
         request.requestsAlternateRoutes = true
         request.transportType = .automobile
@@ -117,14 +116,14 @@ class MapModel {
                     byUber = self.convertTime(time: r.expectedTravelTime)
 
                     textView.text =  " If you would like to take Uber, it might take " + byUber
-                    self.basicModel.testToSpeech(" If you would like to take Uber, it might take " + byUber)
+                    self.basicModel.textToSpeech(" If you would like to take Uber, it might take " + byUber)
                 }
             }
         }
 
         // Public transit
         let request2 = MKDirectionsRequest()
-        request2.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _lat, longitude: _lon), addressDictionary: nil))
+        request2.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _lat, longitude: _lng), addressDictionary: nil))
         request2.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _latEnd, longitude: _lonEnd), addressDictionary: nil))
         request2.requestsAlternateRoutes = true
         request2.transportType = .transit
@@ -134,14 +133,14 @@ class MapModel {
                 if let r = response {
                     byPublic = self.convertTime(time: r.expectedTravelTime)
                     textView.text.append(" If you prefer to by public transit, it will take " + byPublic)
-                    self.basicModel.testToSpeech(" If you prefer to by public transit, it will take " + byPublic)
+                    self.basicModel.textToSpeech(" If you prefer to by public transit, it will take " + byPublic)
                 }
             }
         }
 
         // Walk
         let request3 = MKDirectionsRequest()
-        request3.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _lat, longitude: _lon), addressDictionary: nil))
+        request3.source = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _lat, longitude: _lng), addressDictionary: nil))
         request3.destination = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: _latEnd, longitude: _lonEnd), addressDictionary: nil))
         request3.requestsAlternateRoutes = true
         request3.transportType = .walking
@@ -151,35 +150,23 @@ class MapModel {
                 if let r = response {
                     byWalk = self.convertTime(time: r.expectedTravelTime)
                     textView.text.append( " If you choose walking to the destination, it will take " + byWalk)
-                    self.basicModel.testToSpeech(" If you choose walking to the destination, it will take " + byWalk)
+                    self.basicModel.textToSpeech(" If you choose walking to the destination, it will take " + byWalk)
                 }
             }
         }
     }
     
-    // Open Apple Map
-    func openInMapsTransit(coord:CLLocationCoordinate2D) {
-        let placemark = MKPlacemark(coordinate:coord, addressDictionary: nil)
-        let mapItem = MKMapItem(placemark: placemark)
-        mapItem.name = "Your Destination"
-        let launchOptions = [MKLaunchOptionsDirectionsModeKey:MKLaunchOptionsDirectionsModeTransit]
-        mapItem.openInMaps(launchOptions: launchOptions)
+    func getCurrentCoordinate() -> GeoLocation {
+        return GeoLocation(latitude: Float(self._lat), longitude: Float(self._lng))
     }
     
-    // Weather of current location
-    func currentWeather(_ textView: UITextView){
-        let currentLat = String(self._lat)
-        let currentLon = String(self._lon)
-        weatherModel.getWeather(textView, currentLat, currentLon)
-    }
-    
-    // Call for the search location
-    func makeCall(_ textView: UITextView){
-        let searchLat = self.addressModel.getCoreData(name: "lat")
-        let searchLon = self.addressModel.getCoreData(name: "lon")
-        //        let searchLat = String("40.0023")
-        //        let searchLon = String("-83.0159")
-        callFuncModel.getPlaceID(textView, searchLat, searchLon)
-    }
+//    // Call for the search location
+//    func makeCall(_ textView: UITextView){
+//        let searchLat = self.addressModel.getCoreData(name: "lat")
+//        let searchLon = self.addressModel.getCoreData(name: "lon")
+//        //        let searchLat = String("40.0023")
+//        //        let searchLon = String("-83.0159")
+//        callFuncModel.getPlaceID(textView, searchLat, searchLon)
+//    }
 
 }

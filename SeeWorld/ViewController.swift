@@ -13,66 +13,84 @@ import AVFoundation
 import Speech
 
 
-class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, SFSpeechRecognizerDelegate{
+class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, SFSpeechRecognizerDelegate, AVSpeechSynthesizerDelegate, ConversationResponseHandlerDelegate, SimpleResponseHandlerDelegate {
     
-    /* -------------------------------------------View ------------------------------------------- */
     /********************* For basicView *********************/
-    let basicModel = BaiscFuncModel()
+    let textSpeechConversion = TextSpeechConversionClient()
     
     /********************** For mapView **********************/
     @IBOutlet weak var mapView: MKMapView!
     let locationManager = CLLocationManager()
-    let mapModel = MapModel()
+    let mapModel = MapClient()
     
     /********************** For textView *********************/
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var microphoneButton: UIButton!
     let textModel = TextModel()
     
+    //let longPressGesture = UILongPressGestureRecognizer(target: self, action: Selector("longPressCancelButton:"))
+    
+    private let conversation = ConversationClient()
+    private let weatherModel = WeatherClient()
+    private let timeModel = TimeClient()
+    private let userReviewModel = UserReviewClient()
+    
+    private var latitude : Float = 0.0
+    private var longitude : Float = 0.0
+    
+    private var response : String = ""
+    private var isSpeakerAccessEnabled = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        /********************** For mapView **********************/
+
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        /********************** For textView *********************/
         microphoneButton.isEnabled = false
-        basicModel.speechRecognizer.delegate = self
-        textView.isEditable = false
+        textSpeechConversion.speechRecognizer.delegate = self
+        textSpeechConversion.speechSynthesizer.delegate = self
+        
+        // Delegate
+        conversation.delegate = self
+        weatherModel.delegate = self
+        timeModel.delegate = self
         
         // Check the microphone
         SFSpeechRecognizer.requestAuthorization { (authStatus) in
-            var isButtonEnabled = false
+            var isSpeakerAccessEnabled = false
             
             switch authStatus {
             case .authorized:
-                isButtonEnabled = true
+                isSpeakerAccessEnabled = true
             case .denied:
-                isButtonEnabled = false
+                isSpeakerAccessEnabled = false
                 print("User denied access to speech recognition")
             case .restricted:
-                isButtonEnabled = false
+                isSpeakerAccessEnabled = false
                 print("Speech recognition restricted on this device")
             case .notDetermined:
-                isButtonEnabled = false
+                isSpeakerAccessEnabled = false
                 print("Speech recognition not yet authorized")
             }
             // Make the button works
             OperationQueue.main.addOperation() {
-                self.microphoneButton.isEnabled = isButtonEnabled
+                self.isSpeakerAccessEnabled = isSpeakerAccessEnabled
             }
         }
     }
     
-    /* --------------------------------------- Controller --------------------------------------- */
-    /********************** For mapView **********************/
+    override func viewWillAppear(_ animated: Bool) {
+        ConversationContext.Instance.reset()
+        self.startConversation()
+    }
+    
     // Your location
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
-    {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations[0]
-        mapModel._lon = Double(location.coordinate.longitude)
+        mapModel._lng = Double(location.coordinate.longitude)
         mapModel._lat = Double(location.coordinate.latitude)
         
         // pass the value from map to text
@@ -91,48 +109,108 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         locationManager.stopUpdatingLocation()
     }
     
-    /********************** For textView **********************/
-    func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer, availabilityDidChange available: Bool) {
-        if available {
-            microphoneButton.isEnabled = true
-        } else {
-            microphoneButton.isEnabled = false
-        }
-    }
-    
-    // The main func, which control the microphone
-    
     @IBAction func microphoneTapped(_ sender: AnyObject) {
-        if self.basicModel.audioEngine.isRunning {
-            self.basicModel.audioEngine.stop()
-            self.basicModel.recognitionRequest?.endAudio()
-            microphoneButton.isEnabled = false
-            self.basicModel.input = self.basicModel.bestString
-            
-            if (self.textModel.bool) {
-                self.textModel.claasify(self.basicModel.input, self.textModel.state, _textView: textView, _mapView: mapView)
+        if self.textSpeechConversion.audioEngine.isRunning {
+            self.textSpeechConversion.audioEngine.stop()
+            self.textSpeechConversion.recognitionRequest?.endAudio()
+
+            let audioSession = AVAudioSession.sharedInstance()
+            do {
+                try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+                try audioSession.setMode(AVAudioSessionModeDefault)
+            } catch {
+                print("audioSession properties weren't set because of an error.")
             }
-            else {
-                self.textModel.state = "sw_trans_method_selection"
-                self.textModel.claasify(self.basicModel.input, self.textModel.state, _textView: textView, _mapView: mapView)
-            }
+            let userInput = self.textView.text
+            ConversationContext.Instance.input = userInput!
+            self.startConversation()
         } else {
-            if (self.textModel.bool) {
-                self.textView.text = "What is your destination?"
-                self.basicModel.testToSpeech("What is your destination?")
-                //self.mapModel.searchDetails(textView)
-            }
-            else {
-                self.textView.text = "Which transport do you prefer?"
-                self.basicModel.testToSpeech("Which transport do you prefer?")
-            }
-            
-            // Delay the speech to text
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64(2*NSEC_PER_SEC))/Double(NSEC_PER_SEC)) {
-                self.basicModel.startRecording(_textView: self.textView, _microphoneButton: self.microphoneButton)
-            }
+            self.textSpeechConversion.startRecording(textView: self.textView, microphoneButton: self.microphoneButton)
         }
     }
     
+    private func startConversation() {
+        self.microphoneButton.isEnabled = false
+        conversation.sendMessage()
+    }
+    
+    func speechRecognizer(_ speechRecognizer: SFSpeechRecognizer,
+                          availabilityDidChange available: Bool) {
+        if available {
+            if self.isSpeakerAccessEnabled {
+                microphoneButton.isEnabled = true
+            }
+        } else {
+            microphoneButton.isEnabled = false
+        }
+    }
+    
+//    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer,
+//                           didStart utterance: AVSpeechUtterance) {
+//        self.microphoneButton.isEnabled = false
+//    }
+//
+//    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer,
+//                           didFinish utterance: AVSpeechUtterance) {
+//        if self.isSpeakerAccessEnabled {
+//            self.microphoneButton.isEnabled = true
+//        }
+//    }
+    
+    func handleConversationResponse(result: [String : Any]) {
+        let systemContext = result["system"] as! [String : Any]
+        let nodeName = result["nodeName"] as! String
+        let responseArray = result["response"] as! [String]
+        
+        self.response = ""
+        for singleResponse : String in responseArray {
+            self.response += singleResponse + "\n"
+        }
+        
+        ConversationContext.Instance.systemContext = systemContext
+        switch nodeName {
+        case "Get Review":
+            //evaluate “valid_review”
+            break;
+        case "Weather":
+            //return current weather
+            let currentCoordinate = mapModel.getCurrentCoordinate()
+            weatherModel.retrieveWeatherData(self.textView, currentCoordinate.latitude, currentCoordinate.longitude)
+            break;
+        case "Time":
+            //return current time
+            self.timeModel.retrieveCurrentTime()
+            break;
+        case "Choose Method":
+            //get “method” (walk, public, uber, phone)
+            break;
+        case "Destination":
+            // get destination
+            break;
+        case "Info":
+            //return eta (transportation method and review summary)
+            break;
+        case "Close App":
+            UIControl().sendAction(#selector(NSXPCConnection.suspend), to: UIApplication.shared, for: nil)
+            break;
+        default:
+            self.handleSimpleResponse(response: response, shouldAppendOriginalResponse: false)
+            break;
+        }
+    }
+    
+    func handleSimpleResponse(response: String, shouldAppendOriginalResponse : Bool) {
+        var response = response
+        if shouldAppendOriginalResponse {
+            response += "\n" + self.response
+        }
+        DispatchQueue.main.async {
+            self.textView.text = response
+            self.textSpeechConversion.textToSpeech(response)
+            if self.isSpeakerAccessEnabled {
+                self.microphoneButton.isEnabled = true
+            }
+        }
+    }
 }
 

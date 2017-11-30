@@ -14,8 +14,7 @@ import MapKit
 
 class CallFuncModel {
     
-    let basicModel = BaiscFuncModel()
-    let addressModel = AddressModel()
+    let basicModel = TextSpeechConversionClient()
 
     // Use to get PlaceID
     private let googleURL = "https://maps.googleapis.com/maps/api/geocode/json"
@@ -27,7 +26,6 @@ class CallFuncModel {
         
         let session = URLSession.shared
         let googleRequestURL = NSURL(string: "\(googleURL)?key=\(googleAPIKey)&latlng=\(lat),\(lon)")!
-        
         
         // The data task retrieves the data.
         let dataTask = session.dataTask(with: googleRequestURL as URL) {
@@ -74,7 +72,7 @@ class CallFuncModel {
             }
             else {
                 textView.text = "There is no phone number for your destination."
-                self.basicModel.testToSpeech("There is no phone number for your destination."
+                self.basicModel.textToSpeech("There is no phone number for your destination."
                 )
             }
             //print("Place openNowStatus \(place.openNowStatus)")
@@ -95,7 +93,7 @@ class CallFuncModel {
         print(fullAddr)
         print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
         // Get the ETA
-        let mapModel = MapModel()
+        let mapModel = MapClient()
         mapModel.searchPlace(textView, mapView, fullAddr: fullAddr)
     }
     
