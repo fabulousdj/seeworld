@@ -11,27 +11,31 @@ import Speech
 import AVFoundation
 import UIKit
 
-class BaiscFuncModel {
+class TextSpeechConversionClient {
     // Initialize the var for speech fuction
     let speechRecognizer = SFSpeechRecognizer(locale: Locale.init(identifier: "en-US"))!
     var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     var recognitionTask: SFSpeechRecognitionTask?
     let audioEngine = AVAudioEngine()
-    
-    var bestString = ""
-    var input = " "
+    var speechSynthesizer : AVSpeechSynthesizer = AVSpeechSynthesizer()
     
     // Text to Speech
-    func testToSpeech(_ outputText: String) {
+    func textToSpeech(_ outputText: String) {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession.setMode(AVAudioSessionModeDefault)
+        } catch {
+            print("audioSession properties weren't set because of an error.")
+        }
         let utterance = AVSpeechUtterance(string: outputText)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
-        let synVoice = AVSpeechSynthesizer()
-        synVoice.speak(utterance)
+        speechSynthesizer.speak(utterance)
     }
     
     // Speech to Text
-    func startRecording(_textView: UITextView, _microphoneButton: UIButton) {
+    func startRecording(textView: UITextView, microphoneButton: UIButton) {
         if recognitionTask != nil {
             recognitionTask?.cancel()
             recognitionTask = nil
@@ -61,10 +65,7 @@ class BaiscFuncModel {
             var isFinal = false
             
             if result != nil {
-                _textView.text = result!.bestTranscription.formattedString
-                
-                self.bestString = result!.bestTranscription.formattedString
-                
+                textView.text = result!.bestTranscription.formattedString
                 isFinal = (result?.isFinal)!
             }
             
@@ -75,7 +76,7 @@ class BaiscFuncModel {
                 self.recognitionRequest = nil
                 self.recognitionTask = nil
                 
-                _microphoneButton.isEnabled = true
+                microphoneButton.isEnabled = true
             }
         })
         
@@ -91,6 +92,6 @@ class BaiscFuncModel {
         } catch {
             print("audioEngine couldn't start because of an error.")
         }
-        
+        textView.text = "Say something, I'm listening!"
     }
 }
