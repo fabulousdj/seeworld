@@ -10,7 +10,7 @@ import Foundation
 
 class TimeClient {
     
-    weak var delegate : SimpleResponseHandlerDelegate?
+    weak var delegate : TextResultHandlerDelegate?
     
     func retrieveCurrentTime() {
         let dateFormatter = DateFormatter()
@@ -22,7 +22,7 @@ class TimeClient {
     
     private func delegateResponseHandling(response : String) {
         if (self.delegate != nil) {
-            self.delegate?.handleSimpleResponse(response: response, shouldAppendOriginalResponse: true)
+            self.delegate?.handleTextResult(result: response, shouldAppendOriginalResponse: false)
         }
     }
 }

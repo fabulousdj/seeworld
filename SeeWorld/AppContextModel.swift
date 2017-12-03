@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ConversationContext {
+class AppContext {
     
     var input : String
     var nodeName : String
@@ -17,10 +17,19 @@ class ConversationContext {
     var isValidDestination : Bool
     var isValidReview : Bool
     var shouldVerifyAddress : Bool
-    var completeAddress : String
+    var destinationInfo : PlaceInfo?
+    var reviewInsights : String
+    var walkInfo : String
+    var transitInfo : String
+    var driveInfo : String
+    var responseText : String
+    var finishedSubroutine : Int
+    var canStartNewConversation : Bool
+    var hasPhoneNumber : Bool
+    var isCalling : Bool
     var systemContext : [String : Any]
     
-    static let Instance = ConversationContext()
+    static let Instance = AppContext()
     
     private init() {
         self.input = ""
@@ -30,7 +39,16 @@ class ConversationContext {
         self.isValidDestination = false
         self.isValidReview = false
         self.shouldVerifyAddress = true
-        self.completeAddress = ""
+        self.destinationInfo = nil
+        self.reviewInsights = ""
+        self.walkInfo = ""
+        self.transitInfo = ""
+        self.driveInfo = ""
+        self.responseText = ""
+        self.finishedSubroutine = 0
+        self.canStartNewConversation = true
+        self.hasPhoneNumber = false
+        self.isCalling = false
         self.systemContext = [:]
     }
     
@@ -42,7 +60,15 @@ class ConversationContext {
         self.isValidDestination = false
         self.isValidReview = false
         self.shouldVerifyAddress = true
-        self.completeAddress = ""
+        self.destinationInfo = nil
+        self.reviewInsights = ""
+        self.walkInfo = ""
+        self.transitInfo = ""
+        self.driveInfo = ""
+        self.responseText = ""
+        self.finishedSubroutine = 0
+        self.hasPhoneNumber = false
+        self.isCalling = false
         self.systemContext = [:]
     }
 }

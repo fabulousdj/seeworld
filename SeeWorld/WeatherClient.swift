@@ -15,7 +15,7 @@ class WeatherClient {
     private let openWeatherMapBaseURL = "http://api.openweathermap.org/data/2.5/weather"
     private let openWeatherMapAPIKey = "8d07dc0456656e99d50a7f6c050df180"
     
-    weak var delegate : SimpleResponseHandlerDelegate?
+    weak var delegate : TextResultHandlerDelegate?
     
     func retrieveWeatherData(_ textView: UITextView, _ lat: Float, _ lon: Float) {
         let session = URLSession.shared
@@ -58,7 +58,7 @@ class WeatherClient {
     
     private func delegateResponseHandling(response : String) {
         if (self.delegate != nil) {
-            self.delegate?.handleSimpleResponse(response: response, shouldAppendOriginalResponse: true)
+            self.delegate?.handleTextResult(result: response, shouldAppendOriginalResponse: false)
         }
     }
 

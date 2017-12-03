@@ -11,6 +11,9 @@ import Alamofire
 
 class UserReviewClient {
     
+    weak var delegate : UserReviewClientResponseHandlerDelegate?
+    weak var subroutineCompletionDelegate : SubroutineFailureHandlerDelegate?
+    
     struct ReviewInsights : Codable {
         var count : Int
         var positiveRate : Float
@@ -24,18 +27,19 @@ class UserReviewClient {
         }
     }
     
-    let postReviewApiEndpoint = "http://seeworld-api-test.mybluemix.net/seeworld/api/v1/user-reviews/post-review"
-    let getInsightsApiEndpoint = "http://seeworld-api-test.mybluemix.net/seeworld/api/v1/user-reviews/get-insights"
+    private let postReviewApiEndpoint = "http://seeworld-api-test.mybluemix.net/seeworld/api/v1/user-reviews/post-review"
+    private let getInsightsApiEndpoint = "http://seeworld-api-test.mybluemix.net/seeworld/api/v1/user-reviews/get-insights"
     
-    func postReview(_ placeInfo : PlaceInfo, review : String) {
+    func postReview(placeId : String, review : String) {
         
-        let requestBody: [String: Any] = [
-            "location" : placeInfo,
+        let requestBody: [String: String] = [
+            "place_id" : placeId,
             "review" : review
         ]
         
         Alamofire.request(getInsightsApiEndpoint, method: .post, parameters: requestBody, encoding: JSONEncoding.default)
             .responseJSON { response in
+                
                 guard response.result.error == nil else {
                     // got an error in getting the data, need to handle it
                     print("error calling GET on /seeworld/api/v1/user-reviews/post_review")
@@ -57,19 +61,20 @@ class UserReviewClient {
                 }
                 
                 // succeed
-                if !(isSuccessful as! Bool) {
-                    
+                if (isSuccessful as! Bool) {
+                    self.delegate?.handlePostUserReviewResponse()
                 }
         }
     }
     
-    func retrieveReviewInsights(_ placeId : String) {
+    func retrieveReviewInsights(placeId : String) {
         Alamofire.request(getInsightsApiEndpoint, method: .get, parameters: ["id": placeId])
             .responseJSON { response in
                 guard response.result.error == nil else {
                     // got an error in getting the data, need to handle it
                     print("error calling GET on /seeworld/api/v1/user-reviews/get-insights")
                     print(response.result.error!)
+                    self.subroutineCompletionDelegate?.handleSubroutineFailure()
                     return
                 }
                 
@@ -77,19 +82,19 @@ class UserReviewClient {
                 guard let json = response.result.value as? [String: Any] else {
                     print("didn't get classify object as JSON from API")
                     print("Error: \(String(describing: response.result.error))")
+                    self.subroutineCompletionDelegate?.handleSubroutineFailure()
                     return
                 }
                 
                 // get and print the title
-                guard let result = json["value"] else {
+                guard let result = json["value"] as? [String : Any] else {
                     print("Could not get classified result from JSON")
+                    self.subroutineCompletionDelegate?.handleSubroutineFailure()
                     return
                 }
                 
-                let decoder = JSONDecoder()
-                let reviewInsights = try! decoder.decode(ReviewInsights.self, from: result as! Data)
-                
                 // handle place info data
+                self.delegate?.handleUserReviewInsightsResponse(response: result)
         }
     }
 }

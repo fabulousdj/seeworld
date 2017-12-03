@@ -16,21 +16,22 @@
 		645F84021FAB9EBE00BD65AC /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 645F84011FAB9E8F00BD65AC /* CoreLocation.framework */; };
 		645F84041FAB9EDA00BD65AC /* Speech.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 645F84031FAB9ECB00BD65AC /* Speech.framework */; };
 		645F84061FAB9EEE00BD65AC /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 645F84051FAB9EE800BD65AC /* MapKit.framework */; };
-		645F84081FABA17800BD65AC /* MapClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645F84071FABA17800BD65AC /* MapClient.swift */; };
+		645F84081FABA17800BD65AC /* MapViewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645F84071FABA17800BD65AC /* MapViewClient.swift */; };
 		645F840A1FABA73F00BD65AC /* TextSpeechConversionClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645F84091FABA73F00BD65AC /* TextSpeechConversionClient.swift */; };
-		645F840C1FABB21A00BD65AC /* TextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645F840B1FABB21A00BD65AC /* TextModel.swift */; };
 		645F840E1FABB3E200BD65AC /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 645F840D1FABB3E200BD65AC /* Podfile */; };
 		64E5782D1FBCA13300F6BE48 /* WeatherClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E5782C1FBCA13300F6BE48 /* WeatherClient.swift */; };
-		64E5782F1FBCA7F300F6BE48 /* CallFuncModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64E5782E1FBCA7F300F6BE48 /* CallFuncModel.swift */; };
+		6C0841201FD2040A0028270E /* UberClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C08411F1FD2040A0028270E /* UberClient.swift */; };
+		6C0841241FD262680028270E /* TransportInfoClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C0841231FD262680028270E /* TransportInfoClient.swift */; };
 		6C78B7911FCE0C7B00E28A4E /* AppRedirectClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B7901FCE0C7B00E28A4E /* AppRedirectClient.swift */; };
 		6C78B7931FCE0D5100E28A4E /* CoreDataClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B7921FCE0D5100E28A4E /* CoreDataClient.swift */; };
 		6C78B7951FCE1FC600E28A4E /* PlaceSearchClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B7941FCE1FC500E28A4E /* PlaceSearchClient.swift */; };
 		6C78B7971FCE2C3A00E28A4E /* ConversationClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B7961FCE2C3A00E28A4E /* ConversationClient.swift */; };
 		6C78B7991FCE2D6E00E28A4E /* UserReviewClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B7981FCE2D6E00E28A4E /* UserReviewClient.swift */; };
 		6C78B79B1FCE2FE100E28A4E /* PlaceInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B79A1FCE2FE100E28A4E /* PlaceInfoModel.swift */; };
-		6C78B79D1FCE4B3B00E28A4E /* ConversationContextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B79C1FCE4B3B00E28A4E /* ConversationContextModel.swift */; };
+		6C78B79D1FCE4B3B00E28A4E /* AppContextModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B79C1FCE4B3B00E28A4E /* AppContextModel.swift */; };
 		6C78B79F1FCE5EAF00E28A4E /* TimeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B79E1FCE5EAF00E28A4E /* TimeClient.swift */; };
-		6C78B7A31FCF59EF00E28A4E /* ResponseHandlerDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B7A21FCF59EF00E28A4E /* ResponseHandlerDelegates.swift */; };
+		6C78B7A31FCF59EF00E28A4E /* Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C78B7A21FCF59EF00E28A4E /* Delegates.swift */; };
+		6CC95EE51FD0C2AE009AC2F6 /* AppExitClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CC95EE41FD0C2AE009AC2F6 /* AppExitClient.swift */; };
 		996A1DC4A5851EE9548C3AD7 /* Pods_SeeWorld.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC416127008FD5CC2429C32 /* Pods_SeeWorld.framework */; };
 /* End PBXBuildFile section */
 
@@ -49,21 +50,22 @@
 		645F84011FAB9E8F00BD65AC /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		645F84031FAB9ECB00BD65AC /* Speech.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Speech.framework; path = System/Library/Frameworks/Speech.framework; sourceTree = SDKROOT; };
 		645F84051FAB9EE800BD65AC /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		645F84071FABA17800BD65AC /* MapClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapClient.swift; sourceTree = "<group>"; };
+		645F84071FABA17800BD65AC /* MapViewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewClient.swift; sourceTree = "<group>"; };
 		645F84091FABA73F00BD65AC /* TextSpeechConversionClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextSpeechConversionClient.swift; sourceTree = "<group>"; };
-		645F840B1FABB21A00BD65AC /* TextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextModel.swift; sourceTree = "<group>"; };
 		645F840D1FABB3E200BD65AC /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		64E5782C1FBCA13300F6BE48 /* WeatherClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherClient.swift; sourceTree = "<group>"; };
-		64E5782E1FBCA7F300F6BE48 /* CallFuncModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallFuncModel.swift; sourceTree = "<group>"; };
+		6C08411F1FD2040A0028270E /* UberClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UberClient.swift; sourceTree = "<group>"; };
+		6C0841231FD262680028270E /* TransportInfoClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransportInfoClient.swift; sourceTree = "<group>"; };
 		6C78B7901FCE0C7B00E28A4E /* AppRedirectClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRedirectClient.swift; sourceTree = "<group>"; };
 		6C78B7921FCE0D5100E28A4E /* CoreDataClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataClient.swift; sourceTree = "<group>"; };
 		6C78B7941FCE1FC500E28A4E /* PlaceSearchClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceSearchClient.swift; sourceTree = "<group>"; };
 		6C78B7961FCE2C3A00E28A4E /* ConversationClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationClient.swift; sourceTree = "<group>"; };
 		6C78B7981FCE2D6E00E28A4E /* UserReviewClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserReviewClient.swift; sourceTree = "<group>"; };
 		6C78B79A1FCE2FE100E28A4E /* PlaceInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfoModel.swift; sourceTree = "<group>"; };
-		6C78B79C1FCE4B3B00E28A4E /* ConversationContextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationContextModel.swift; sourceTree = "<group>"; };
+		6C78B79C1FCE4B3B00E28A4E /* AppContextModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppContextModel.swift; sourceTree = "<group>"; };
 		6C78B79E1FCE5EAF00E28A4E /* TimeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeClient.swift; sourceTree = "<group>"; };
-		6C78B7A21FCF59EF00E28A4E /* ResponseHandlerDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseHandlerDelegates.swift; sourceTree = "<group>"; };
+		6C78B7A21FCF59EF00E28A4E /* Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Delegates.swift; sourceTree = "<group>"; };
+		6CC95EE41FD0C2AE009AC2F6 /* AppExitClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExitClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,20 +121,21 @@
 				645F83F71FAB94DE00BD65AC /* LaunchScreen.storyboard */,
 				645F83FA1FAB94DE00BD65AC /* Info.plist */,
 				645F83F21FAB94DE00BD65AC /* SeeWorld.xcdatamodeld */,
-				645F84071FABA17800BD65AC /* MapClient.swift */,
+				645F84071FABA17800BD65AC /* MapViewClient.swift */,
 				645F84091FABA73F00BD65AC /* TextSpeechConversionClient.swift */,
-				645F840B1FABB21A00BD65AC /* TextModel.swift */,
 				64E5782C1FBCA13300F6BE48 /* WeatherClient.swift */,
-				64E5782E1FBCA7F300F6BE48 /* CallFuncModel.swift */,
 				6C78B7901FCE0C7B00E28A4E /* AppRedirectClient.swift */,
+				6C08411F1FD2040A0028270E /* UberClient.swift */,
 				6C78B7921FCE0D5100E28A4E /* CoreDataClient.swift */,
 				6C78B7941FCE1FC500E28A4E /* PlaceSearchClient.swift */,
 				6C78B7961FCE2C3A00E28A4E /* ConversationClient.swift */,
 				6C78B7981FCE2D6E00E28A4E /* UserReviewClient.swift */,
 				6C78B79A1FCE2FE100E28A4E /* PlaceInfoModel.swift */,
-				6C78B79C1FCE4B3B00E28A4E /* ConversationContextModel.swift */,
 				6C78B79E1FCE5EAF00E28A4E /* TimeClient.swift */,
-				6C78B7A21FCF59EF00E28A4E /* ResponseHandlerDelegates.swift */,
+				6CC95EE41FD0C2AE009AC2F6 /* AppExitClient.swift */,
+				6C0841231FD262680028270E /* TransportInfoClient.swift */,
+				6C78B7A21FCF59EF00E28A4E /* Delegates.swift */,
+				6C78B79C1FCE4B3B00E28A4E /* AppContextModel.swift */,
 			);
 			path = SeeWorld;
 			sourceTree = "<group>";
@@ -282,21 +285,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6C78B79D1FCE4B3B00E28A4E /* ConversationContextModel.swift in Sources */,
+				6CC95EE51FD0C2AE009AC2F6 /* AppExitClient.swift in Sources */,
+				6C78B79D1FCE4B3B00E28A4E /* AppContextModel.swift in Sources */,
 				6C78B7931FCE0D5100E28A4E /* CoreDataClient.swift in Sources */,
-				645F840C1FABB21A00BD65AC /* TextModel.swift in Sources */,
 				6C78B7991FCE2D6E00E28A4E /* UserReviewClient.swift in Sources */,
 				645F840A1FABA73F00BD65AC /* TextSpeechConversionClient.swift in Sources */,
-				645F84081FABA17800BD65AC /* MapClient.swift in Sources */,
+				6C0841241FD262680028270E /* TransportInfoClient.swift in Sources */,
+				645F84081FABA17800BD65AC /* MapViewClient.swift in Sources */,
 				6C78B79B1FCE2FE100E28A4E /* PlaceInfoModel.swift in Sources */,
-				6C78B7A31FCF59EF00E28A4E /* ResponseHandlerDelegates.swift in Sources */,
+				6C78B7A31FCF59EF00E28A4E /* Delegates.swift in Sources */,
 				645F83EE1FAB94DE00BD65AC /* ViewController.swift in Sources */,
 				6C78B7951FCE1FC600E28A4E /* PlaceSearchClient.swift in Sources */,
+				6C0841201FD2040A0028270E /* UberClient.swift in Sources */,
 				645F83EC1FAB94DE00BD65AC /* AppDelegate.swift in Sources */,
 				6C78B79F1FCE5EAF00E28A4E /* TimeClient.swift in Sources */,
 				64E5782D1FBCA13300F6BE48 /* WeatherClient.swift in Sources */,
 				645F83F41FAB94DE00BD65AC /* SeeWorld.xcdatamodeld in Sources */,
-				64E5782F1FBCA7F300F6BE48 /* CallFuncModel.swift in Sources */,
 				6C78B7971FCE2C3A00E28A4E /* ConversationClient.swift in Sources */,
 				6C78B7911FCE0C7B00E28A4E /* AppRedirectClient.swift in Sources */,
 			);

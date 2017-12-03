@@ -17,10 +17,17 @@ class TextSpeechConversionClient {
     var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     var recognitionTask: SFSpeechRecognitionTask?
     let audioEngine = AVAudioEngine()
-    let speechSynthesizer = AVSpeechSynthesizer()
+    var speechSynthesizer : AVSpeechSynthesizer = AVSpeechSynthesizer()
     
     // Text to Speech
     func textToSpeech(_ outputText: String) {
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            try audioSession.setCategory(AVAudioSessionCategoryPlayback)
+            try audioSession.setMode(AVAudioSessionModeDefault)
+        } catch {
+            print("audioSession properties weren't set because of an error.")
+        }
         let utterance = AVSpeechUtterance(string: outputText)
         utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
@@ -87,5 +94,4 @@ class TextSpeechConversionClient {
         }
         textView.text = "Say something, I'm listening!"
     }
-
 }
