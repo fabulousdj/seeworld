@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,11 +20,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" mapType="standard" zoomEnabled="NO" scrollEnabled="NO" rotateEnabled="NO" pitchEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ty8-FU-NkU">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="545"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="544"/>
                                 <gestureRecognizers/>
                             </mapView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="1" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIA-R3-cz0">
-                                <rect key="frame" x="31" y="560" width="313" height="203"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jyU-Fg-Sdi">
+                                <rect key="frame" x="0.0" y="544" width="375" height="268"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Connecting..." textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AIA-R3-cz0">
+                                <rect key="frame" x="20" y="564" width="335" height="223"/>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="14"/>
@@ -39,39 +45,29 @@
                                     <action selector="microphoneTouchedUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bhI-yB-v5O"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kCQ-Dr-1Lx">
-                                <rect key="frame" x="0.0" y="544.66666666666663" width="375" height="1"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <accessibility key="accessibilityConfiguration">
-                                    <accessibilityTraits key="traits" none="YES"/>
-                                    <bool key="isElement" value="NO"/>
-                                </accessibility>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="1" id="s7k-ir-kZ3"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="AIA-R3-cz0" secondAttribute="trailing" constant="15" id="32o-YF-ZE0"/>
-                            <constraint firstItem="kCQ-Dr-1Lx" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="AyK-8h-vTH"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="centerX" secondItem="jyU-Fg-Sdi" secondAttribute="centerX" id="0tU-MD-LU1"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="trailing" secondItem="jyU-Fg-Sdi" secondAttribute="trailing" constant="-20" id="6lj-XB-2ge"/>
+                            <constraint firstItem="jyU-Fg-Sdi" firstAttribute="centerX" secondItem="HZm-QN-9AJ" secondAttribute="centerX" id="A4y-Xw-Ws7"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="top" secondItem="jyU-Fg-Sdi" secondAttribute="top" constant="20" id="C2o-dg-ANx"/>
                             <constraint firstItem="ty8-FU-NkU" firstAttribute="leading" secondItem="HZm-QN-9AJ" secondAttribute="leading" id="JE5-Jf-mUg"/>
                             <constraint firstItem="Oit-oK-p1B" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="KHK-fC-qUa"/>
-                            <constraint firstItem="AIA-R3-cz0" firstAttribute="top" secondItem="ty8-FU-NkU" secondAttribute="bottom" constant="15" id="Ksj-v9-2vy"/>
                             <constraint firstItem="ty8-FU-NkU" firstAttribute="trailing" secondItem="HZm-QN-9AJ" secondAttribute="trailing" id="NoL-vM-LXA"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="bottom" secondItem="jyU-Fg-Sdi" secondAttribute="bottom" constant="-25" id="VHj-bY-0pz"/>
                             <constraint firstItem="Oit-oK-p1B" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WUq-aW-d07"/>
+                            <constraint firstItem="jyU-Fg-Sdi" firstAttribute="top" secondItem="ty8-FU-NkU" secondAttribute="bottom" id="Xv9-22-3O7"/>
                             <constraint firstItem="Oit-oK-p1B" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="a3p-vk-h4f"/>
                             <constraint firstItem="ty8-FU-NkU" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="cpy-Le-yCX"/>
                             <constraint firstItem="Oit-oK-p1B" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="dBj-jc-xk9"/>
-                            <constraint firstItem="AIA-R3-cz0" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="15" id="gts-bW-cAM"/>
+                            <constraint firstItem="jyU-Fg-Sdi" firstAttribute="trailing" secondItem="HZm-QN-9AJ" secondAttribute="trailing" id="deA-lh-S5e"/>
+                            <constraint firstItem="jyU-Fg-Sdi" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="gdu-Aq-7Tr"/>
                             <constraint firstItem="ty8-FU-NkU" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="jfw-zH-gwj"/>
-                            <constraint firstItem="kCQ-Dr-1Lx" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="kUc-dV-lyt"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="AIA-R3-cz0" secondAttribute="bottom" constant="15" id="qK7-RZ-TLt"/>
-                            <constraint firstItem="AIA-R3-cz0" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.25" id="sym-Qp-Rc6"/>
-                            <constraint firstItem="kCQ-Dr-1Lx" firstAttribute="bottom" secondItem="ty8-FU-NkU" secondAttribute="bottom" id="utL-Tm-3ds"/>
+                            <constraint firstItem="jyU-Fg-Sdi" firstAttribute="leading" secondItem="HZm-QN-9AJ" secondAttribute="leading" id="l71-N1-x1k"/>
+                            <constraint firstItem="AIA-R3-cz0" firstAttribute="leading" secondItem="jyU-Fg-Sdi" secondAttribute="leading" constant="20" id="mKg-mw-sJI"/>
+                            <constraint firstItem="jyU-Fg-Sdi" firstAttribute="bottom" secondItem="8bC-Xf-vdC" secondAttribute="bottom" id="yTq-ee-jbk"/>
+                            <constraint firstItem="jyU-Fg-Sdi" firstAttribute="height" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.33" id="yXU-LZ-aJV"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HZm-QN-9AJ"/>
                     </view>
@@ -80,11 +76,12 @@
                         <outlet property="mapView" destination="ty8-FU-NkU" id="TfU-4o-nMj"/>
                         <outlet property="microphoneButton" destination="Oit-oK-p1B" id="6Ae-N9-ORx"/>
                         <outlet property="textView" destination="AIA-R3-cz0" id="S73-TP-GnA"/>
+                        <outlet property="textViewSection" destination="jyU-Fg-Sdi" id="tkN-HU-ee5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133.59999999999999" y="128.18590704647679"/>
+            <point key="canvasLocation" x="133.59999999999999" y="127.83251231527095"/>
         </scene>
     </scenes>
 </document>

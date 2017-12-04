@@ -37,13 +37,14 @@ class UserReviewClient {
             "review" : review
         ]
         
-        Alamofire.request(getInsightsApiEndpoint, method: .post, parameters: requestBody, encoding: JSONEncoding.default)
+        Alamofire.request(postReviewApiEndpoint, method: .post, parameters: requestBody, encoding: JSONEncoding.default)
             .responseJSON { response in
                 
                 guard response.result.error == nil else {
                     // got an error in getting the data, need to handle it
                     print("error calling GET on /seeworld/api/v1/user-reviews/post_review")
                     print(response.result.error!)
+                    self.delegate?.handlePostUserReviewResponse(isSuccessful: false)
                     return
                 }
                 
@@ -51,18 +52,22 @@ class UserReviewClient {
                 guard let json = response.result.value as? [String: Any] else {
                     print("didn't get classify object as JSON from API")
                     print("Error: \(String(describing: response.result.error))")
+                    self.delegate?.handlePostUserReviewResponse(isSuccessful: false)
                     return
                 }
                 
                 // get and print the title
                 guard let isSuccessful = json["successful"] else {
                     print("Could not get classified result from JSON")
+                    self.delegate?.handlePostUserReviewResponse(isSuccessful: false)
                     return
                 }
                 
                 // succeed
                 if (isSuccessful as! Bool) {
-                    self.delegate?.handlePostUserReviewResponse()
+                    self.delegate?.handlePostUserReviewResponse(isSuccessful: true)
+                } else {
+                    self.delegate?.handlePostUserReviewResponse(isSuccessful: false)
                 }
         }
     }
