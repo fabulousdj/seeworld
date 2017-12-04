@@ -17,12 +17,6 @@ class TimeClient {
         dateFormatter.dateFormat = "MM-dd-yyyy HH:mm"
         let dateInFormat = dateFormatter.string(from: Date())
         let response = "The time is " + dateInFormat + "."
-        self.delegateResponseHandling(response: response)
-    }
-    
-    private func delegateResponseHandling(response : String) {
-        if (self.delegate != nil) {
-            self.delegate?.handleTextResult(result: response, shouldAppendOriginalResponse: false)
-        }
+        self.delegate?.handleTextResult(result: response, shouldAppendOriginalResponse: false)
     }
 }

@@ -29,7 +29,8 @@ class TextSpeechConversionClient {
             print("audioSession properties weren't set because of an error.")
         }
         let utterance = AVSpeechUtterance(string: outputText)
-        utterance.voice = AVSpeechSynthesisVoice(language: "en-US")
+        //utterance.voice = AVSpeechSynthesisVoice(identifier: "com.apple.ttsbundle.Samantha-premium")
+        utterance.voice = AVSpeechSynthesisVoice(identifier: AVSpeechSynthesisVoiceIdentifierAlex)
         utterance.rate = AVSpeechUtteranceDefaultSpeechRate
         speechSynthesizer.speak(utterance)
     }

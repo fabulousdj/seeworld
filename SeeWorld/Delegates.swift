@@ -33,7 +33,7 @@ protocol TravelInfoResponseHandlerDelegate : NSObjectProtocol {
 
 protocol UserReviewClientResponseHandlerDelegate : NSObjectProtocol {
     func handleUserReviewInsightsResponse(response : [String : Any])
-    func handlePostUserReviewResponse()
+    func handlePostUserReviewResponse(isSuccessful : Bool)
 }
 
 protocol SubroutineFailureHandlerDelegate : NSObjectProtocol {

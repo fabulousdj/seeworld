@@ -3,6 +3,14 @@
    version = "1.0">
    <ContextStates>
       <ContextState
+         contextName = "closure #1 in UserReviewClient.postReview(placeId:review:):UserReviewClient.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[&quot;status&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
          contextName = "AppDelegate.applicationDidBecomeActive(_:):AppDelegate.swift">
          <PersistentStrings>
             <PersistentString
@@ -43,18 +51,18 @@
          </PersistentStrings>
       </ContextState>
       <ContextState
-         contextName = "closure #1 in PlaceSearchClient.searchPlace(_:latitude:longitude:):PlaceSearchClient.swift">
-         <PersistentStrings>
-            <PersistentString
-               value = "json[&quot;value&quot;] as NSArray">
-            </PersistentString>
-         </PersistentStrings>
-      </ContextState>
-      <ContextState
          contextName = "AppRedirectClient.makePhoneCall(number:):AppRedirectClient.swift">
          <PersistentStrings>
             <PersistentString
                value = "number.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "closure #1 in PlaceSearchClient.searchPlace(_:latitude:longitude:):PlaceSearchClient.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "json[&quot;value&quot;] as NSArray">
             </PersistentString>
          </PersistentStrings>
       </ContextState>

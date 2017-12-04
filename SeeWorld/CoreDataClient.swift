@@ -12,10 +12,10 @@ import UIKit
 
 class CoreDataClient {
     
-    let entityName : String = "PlaceInfoStorage"
+    private let entityName : String = "PlaceInfoStorage"
     
-    lazy var appDelegate = UIApplication.shared.delegate as! AppDelegate
-    lazy var context = appDelegate.persistentContainer.viewContext
+    private lazy var appDelegate = UIApplication.shared.delegate as! AppDelegate
+    private lazy var context = appDelegate.persistentContainer.viewContext
     
     // Save Core Data
     func savePlaceRecord(placeInfo : PlaceInfo) {

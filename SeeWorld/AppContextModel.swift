@@ -9,11 +9,12 @@
 import Foundation
 
 class AppContext {
-    
+    var ongoingApiCallCount : Int
     var input : String
     var nodeName : String
     var hasPreviousDestination : Bool
     var previousDestination : String
+    var prevDestId : String
     var isValidDestination : Bool
     var isValidReview : Bool
     var shouldVerifyAddress : Bool
@@ -32,10 +33,12 @@ class AppContext {
     static let Instance = AppContext()
     
     private init() {
+        self.ongoingApiCallCount = 0
         self.input = ""
         self.nodeName = ""
         self.hasPreviousDestination = false
         self.previousDestination = ""
+        self.prevDestId = ""
         self.isValidDestination = false
         self.isValidReview = false
         self.shouldVerifyAddress = true
@@ -53,10 +56,12 @@ class AppContext {
     }
     
     public func reset() {
+        self.ongoingApiCallCount = 0
         self.input = ""
         self.nodeName = ""
         self.hasPreviousDestination = false
         self.previousDestination = ""
+        self.prevDestId = ""
         self.isValidDestination = false
         self.isValidReview = false
         self.shouldVerifyAddress = true

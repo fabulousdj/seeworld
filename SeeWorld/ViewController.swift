@@ -12,6 +12,7 @@ import MapKit
 import GooglePlaces
 import AVFoundation
 import Speech
+import QuartzCore
 
 
 class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate, SFSpeechRecognizerDelegate, AVSpeechSynthesizerDelegate, ConversationResponseHandlerDelegate, TextResultHandlerDelegate, PlaceSearchResponseHandlerDelegate, AppExitResponseHandlerDelegate, UserReviewClientResponseHandlerDelegate, TravelInfoResponseHandlerDelegate, SubroutineFailureHandlerDelegate, ApplicationEnterForegroundDelegate {
@@ -24,6 +25,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     let locationManager = CLLocationManager()
     let mapViewClient = MapViewClient()
     
+    @IBOutlet weak var textViewSection: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var microphoneButton: UIButton!
     
@@ -35,6 +37,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     private let placeSearchClient = PlaceSearchClient()
     private let transportInfoClient = TransportInfoClient()
     private let appRedirectClient = AppRedirectClient()
+    private let coreDataClient = CoreDataClient()
     
     private var isSpeakerAccessEnabled = false
     private let subroutineCount : Int = 4
@@ -42,6 +45,17 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        // Draw shadow effect
+        let layer = self.textViewSection.layer
+        layer.masksToBounds = false
+        layer.shadowColor = UIColor.lightGray.cgColor
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width: 0, height: -6)
+        layer.shadowRadius = 4
+        layer.shadowPath = UIBezierPath(rect: layer.bounds).cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = UIScreen.main.scale
+        
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
@@ -164,6 +178,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             // Conversation
             AppContext.Instance.canStartNewConversation = false
             AppContext.Instance.reset()
+            if self.coreDataClient.containsRecords() {
+                AppContext.Instance.hasPreviousDestination = true
+                let placeInfo = self.coreDataClient.getPlaceRecord()
+                self.mapViewClient.showDestinationOnMap(mapView: self.mapView, coordinate: placeInfo.geoLocation, annotationTitle: placeInfo.name)
+                AppContext.Instance.previousDestination = placeInfo.name + " at " + placeInfo.address
+                AppContext.Instance.prevDestId = placeInfo.placeId
+            }
             self.startConversation()
         } else if (AppContext.Instance.isCalling) {
             AppContext.Instance.isCalling = false
@@ -195,9 +216,24 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             AppContext.Instance.systemContext = systemContext
             self.handleTextResult(result: responseText)
             break
-        case ConversationActions.EVAL_REVIEW.rawValue:
-            //evaluate “valid_review”
-            break
+        case ConversationActions.CANCEL_REVIEW.rawValue:
+            mapView.annotations.forEach {
+                if !($0 is MKUserLocation) {
+                    mapView.removeAnnotation($0)
+                }
+            }
+            self.locationManager.startUpdatingLocation()
+            self.coreDataClient.clearRecords()
+            self.handleTextResult(result: responseText)
+        case ConversationActions.POST_REVIEW.rawValue:
+            mapView.annotations.forEach {
+                if !($0 is MKUserLocation) {
+                    mapView.removeAnnotation($0)
+                }
+            }
+            self.locationManager.startUpdatingLocation()
+            self.coreDataClient.clearRecords()
+            self.userReviewClient.postReview(placeId: AppContext.Instance.prevDestId, review: input)
         case ConversationActions.GET_WEATHER.rawValue:
             //return current weather
             let currentCoordinate = mapViewClient.getCurrentCoordinate()
@@ -212,6 +248,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
                 let destinationInfo = AppContext.Instance.destinationInfo
                 if (destinationInfo != nil) {
+                    self.coreDataClient.savePlaceRecord(placeInfo: destinationInfo!)
                     let destGeoLocation = destinationInfo?.geoLocation
                     self.appRedirectClient.redirectToAppleMap(latitude: (destGeoLocation?.latitude)!, longitude: (destGeoLocation?.longitude)!, directionMode: MKLaunchOptionsDirectionsModeWalking)
                 }
@@ -222,6 +259,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
                 let destinationInfo = AppContext.Instance.destinationInfo
                 if (destinationInfo != nil) {
+                    self.coreDataClient.savePlaceRecord(placeInfo: destinationInfo!)
                     let destGeoLocation = destinationInfo?.geoLocation
                     self.appRedirectClient.redirectToAppleMap(latitude: (destGeoLocation?.latitude)!, longitude: (destGeoLocation?.longitude)!, directionMode: MKLaunchOptionsDirectionsModeTransit)
                 }
@@ -232,6 +270,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3) ) {
                 let destinationInfo = AppContext.Instance.destinationInfo
                 if (destinationInfo != nil) {
+                    self.coreDataClient.savePlaceRecord(placeInfo: destinationInfo!)
                     let destGeoLocation = destinationInfo?.geoLocation
                     self.appRedirectClient.redirectToUber(latitude: (destGeoLocation?.latitude)!, longitude: (destGeoLocation?.longitude)!)
                 }
@@ -288,10 +327,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
             response += "\n" + AppContext.Instance.responseText
         }
         DispatchQueue.main.async {
-            if (!self.textSpeechConversion.audioEngine.isRunning) {
-                self.textView.text = response
-                self.textSpeechConversion.textToSpeech(response)
-            }
+            self.textSpeechConversion.audioEngine.stop()
+            self.textSpeechConversion.recognitionRequest?.endAudio()
+            self.textView.text = response
+            self.textSpeechConversion.textToSpeech(response)
             if self.isSpeakerAccessEnabled {
                 self.microphoneButton.isEnabled = true
             }
@@ -381,8 +420,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         self.handleReviewInsightsAndTransportInfo()
     }
     
-    func handlePostUserReviewResponse() {
-        self.handleTextResult(result: "Your review has been successfully posted!", shouldAppendOriginalResponse: true)
+    func handlePostUserReviewResponse(isSuccessful : Bool) {
+        let responseText = isSuccessful ? "Your review has been successfully posted!" : "I'm sorry, but currently the review post process cannot be finished."
+        self.handleTextResult(result: responseText, shouldAppendOriginalResponse: true)
     }
     
     
@@ -417,7 +457,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         if (AppContext.Instance.finishedSubroutine >= self.subroutineCount) {
             AppContext.Instance.finishedSubroutine = 0
             let context = AppContext.Instance
-            var info : String = context.reviewInsights
+            var info : String = context.reviewInsights + "\n"
             
             if !(context.walkInfo.isEmpty) && !(context.driveInfo.isEmpty) {
                 info += "You can take a " + context.walkInfo + " walk, "

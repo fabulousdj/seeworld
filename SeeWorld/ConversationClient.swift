@@ -13,7 +13,8 @@ import Alamofire
 enum ConversationActions : String {
     case WELCOME = "Welcome"
     case CANCEL = "Cancel"
-    case EVAL_REVIEW = "Get Review"
+    case CANCEL_REVIEW = "Cancel Review"
+    case POST_REVIEW = "Post Review"
     case GET_WEATHER = "Weather"
     case GET_TIME = "Time"
     case EVAL_DEST = "Destination"
